@@ -9,7 +9,7 @@ depend on each cell and only re-rendering those cells when a change is made usin
 Formulas follow the format of: "={cellId}{operator}{cellId}" where the operator is: +, -, *, /
 For now they are simply parsed and evaluated using the built in eval function. This will be changed in a future version to use a custom parser and evaluator.
 
-* Full Disclosure: I used chatGPT to help with some of my Regex *
+*Full Disclosure: I used chatGPT to help with some of my Regex*
 
 ## Roadmap
 
