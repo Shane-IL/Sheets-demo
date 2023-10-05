@@ -1,27 +1,18 @@
-# React + TypeScript + Vite
+# Sheets demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is based on a job interview question I had about a year ago. I was asked to sketch out how I would manage the data and state for a basic spreadsheet app.
+I did not really give a good answer in the interview but I thought it would be a good exercise to try and build it out,
+particularly after I started using recoil and realized it would be a good fit for this type of problem.
 
-Currently, two official plugins are available:
+Currently changes reflected in each cell will only re-render cells with them as a dependencies. This is done by keeping track of the cells that 
+depend on each cell and only re-rendering those cells when a change is made using recoil's atom and selector families. 
+Formulas follow the format of: "={cellId}{operator}{cellId}" where the operator is: +, -, *, /
+For now they are simply parsed and evaluated using the built in eval function. This will be changed in a future version to use a custom parser and evaluator.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Stage 1 is just the basic data structure, state and a simple UI to display it.
 
-## Expanding the ESLint configuration
+Stage 2 will be to make the UI nicer
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Stage 3 will be to add the ability to insert rows and columns
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Stage 4 will be to change the formula evaluation to use custom logic and support more operations.
