@@ -4,25 +4,25 @@ import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import {computedCellStateFamily, setCellFormulaSelector, setCellValueSelector } from '../selectors/cell-state-selectors';
+import { computedCellStateFamily, setCellFormulaSelector, setCellValueSelector } from '../selectors/cell-state-selectors';
 
-export default function Cell({id}:{id:string}) {
-    const computedCellState:CellState = useRecoilValue(computedCellStateFamily(id));
+export default function Cell({ id }: { id: string }) {
+    const computedCellState: CellState = useRecoilValue(computedCellStateFamily(id));
     const setFormula = useSetRecoilState(setCellFormulaSelector(id));
     const setValue = useSetRecoilState(setCellValueSelector(id));
     const [isEditing, setIsEditing] = useState(false);
 
-    const handleCellChange = (e:ChangeEvent<HTMLInputElement>) => {
+
+    // When the user changes the value of the cell, we need to update the cell state
+    const handleCellChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
-        if(newValue === '') {
+        // If the user didn't change the value, don't do anything
+        if (!newValue || newValue === computedCellState.value || newValue === computedCellState.formula) {
             return;
         }
 
-        if(newValue === computedCellState.value) {
-            return;
-        }
-
-        if(newValue.startsWith('=')) {
+        // If the user entered a formula, update the formula
+        if (newValue.startsWith('=')) {
             setFormula({
                 ...computedCellState,
                 formula: newValue
@@ -30,6 +30,8 @@ export default function Cell({id}:{id:string}) {
             return;
         }
 
+
+        // If the user entered a value, update the value
         setValue({
             ...computedCellState,
             value: newValue
@@ -50,7 +52,8 @@ export default function Cell({id}:{id:string}) {
                         defaultValue={computedCellState.formula || computedCellState.value}
                         onBlur={(e) => {
                             handleCellChange(e);
-                            setIsEditing(false)}
+                            setIsEditing(false)
+                        }
                         }
                     />
                 ) : (

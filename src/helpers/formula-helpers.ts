@@ -7,9 +7,12 @@ export const evaluateFormula = (formula: string, cellStateGetter: GetRecoilValue
   let evalString = formula.slice(1);
   const invalidDependencies = [];
 
+  // Replace all dependencies with their values
+  // TODO: support nested formulas
   for (const dependency of dependencies) {
     const dependencyValue = cellStateGetter(cellStateFamily(dependency)).value;
 
+    // If the dependency is not a number, it's not supported
     if (isNaN(Number(dependencyValue))) {
       invalidDependencies.push(dependency);
       continue;
@@ -18,6 +21,7 @@ export const evaluateFormula = (formula: string, cellStateGetter: GetRecoilValue
     evalString = evalString.replace(new RegExp(dependency, 'g'), dependencyValue);
   }
 
+  // If there are any invalid dependencies, return an error specifying which ones
   if (invalidDependencies.length > 0) {
     return {
       value: `Error: Unsupported value(s) in ${invalidDependencies.join(', ')}`,
@@ -25,6 +29,7 @@ export const evaluateFormula = (formula: string, cellStateGetter: GetRecoilValue
     };
   }
 
+  
   try {
     return {
       value: eval(evalString),

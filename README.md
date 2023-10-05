@@ -9,10 +9,16 @@ depend on each cell and only re-rendering those cells when a change is made usin
 Formulas follow the format of: "={cellId}{operator}{cellId}" where the operator is: +, -, *, /
 For now they are simply parsed and evaluated using the built in eval function. This will be changed in a future version to use a custom parser and evaluator.
 
-Stage 1 is just the basic data structure, state and a simple UI to display it.
+* Full Disclosure: I used chatGPT to help with some of my Regex *
 
-Stage 2 will be to make the UI nicer
+## Roadmap
 
-Stage 3 will be to add the ability to insert rows and columns
+ - Stage 1 is just the basic data structure, state and a simple UI to display it.
 
-Stage 4 will be to change the formula evaluation to use custom logic and support more operations.
+ - Stage 2 will be to make the UI nicer
+
+ - Stage 3 will be to add the ability to insert rows and columns
+
+ - Stage 4 will be to support nested formulas
+
+ - Stage 4 will be to change the formula evaluation to use custom logic and support more operations.
