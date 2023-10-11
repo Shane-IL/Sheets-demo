@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import sheetStateAtom from '../atoms/sheet-state-atom';
 import Cell from './cell';
+import Label from './label';
 
 export default function Sheet() {
     const { rows, columns } = useRecoilValue(sheetStateAtom);
@@ -21,12 +22,7 @@ export default function Sheet() {
                 style={{ paddingTop: '3rem', gap: '0.5rem' }}
             >
                 {rows.map((_, rowIndex) => (
-                    <div 
-                        key={`rowId-${rowIndex}`} 
-                        className="flex justify-center items-center w-24 h-12 bg-gray-200 border border-gray-300"
-                    >
-                        {rowIndex + 1}
-                    </div>
+                    <Label key={`rowId-${rowIndex}`} labelFor="Row" index={rowIndex} />
                 ))}
             </div>
 
@@ -36,12 +32,7 @@ export default function Sheet() {
                 style={{ paddingLeft: '6rem', gap: '0.5rem' }}
             >
                 {columns.map((_, colIndex) => (
-                    <div 
-                        key={`colId-${colIndex}`} 
-                        className="flex justify-center items-center w-24 h-12 bg-gray-200 border border-gray-300"
-                    >
-                        {String.fromCharCode('A'.charCodeAt(0) + colIndex)}
-                    </div>
+                    <Label key={`colId-${colIndex}`} labelFor="Col" index={colIndex} />
                 ))}
             </div>
 
