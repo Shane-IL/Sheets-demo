@@ -44,11 +44,11 @@ export default function Cell({ id }: { id: string }) {
 
 
     return (
-        <div onDoubleClick={handleToggleEditing} className="w-24 h-12 bg-red-500 grid place-content-center">
+        <div onDoubleClick={handleToggleEditing} className={`w-24 h-12 border-gray-600 grid place-content-center ${isEditing ? 'border-2' : 'border'}`}>
             {
                 isEditing ? (
                     <input
-                        className="w-full h-full bg-transparent text-right"
+                        className="w-full h-full bg-transparent m-0 p-0 text-center outline-none "
                         defaultValue={computedCellState.formula || computedCellState.value}
                         onBlur={(e) => {
                             handleCellChange(e);
