@@ -1,4 +1,5 @@
 import { GetRecoilValue } from 'recoil';
+import { evaluate } from 'mathjs';
 
 import cellStateFamily from '../atoms/cell-state-atom';
 
@@ -32,7 +33,7 @@ export const evaluateFormula = (formula: string, cellStateGetter: GetRecoilValue
   
   try {
     return {
-      value: eval(evalString),
+      value: evaluate(evalString),
       dependencies,
     };
   } catch (error) {

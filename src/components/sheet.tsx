@@ -6,13 +6,13 @@ import Label from './label';
 export default function Sheet() {
     const { rows, columns } = useRecoilValue(sheetStateAtom);
 
-    const cells = rows.flatMap((row, rowIndex) =>
-        columns.map((col, colIndex) => ({
-            row: rowIndex + 1,
-            col: colIndex + 1,
-            id: `${row}${col}`,
-        }))
-    );
+    const cells = columns.flatMap((col, colIndex) =>
+    rows.map((row, rowIndex) => ({
+        row: rowIndex + 1,
+        col: colIndex + 1,
+        id: `${row}${col}`,
+    }))
+);
 
     return (
         <div className="relative w-9/12 h-4/5 overflow-auto box-border">

@@ -1,7 +1,7 @@
 import type { CellState } from '../types/cell-state';
 import type { ChangeEvent } from 'react';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { computedCellStateFamily, setCellFormulaSelector, setCellValueSelector } from '../selectors/cell-state-selectors';
@@ -12,12 +12,17 @@ export default function Cell({ id }: { id: string }) {
     const setValue = useSetRecoilState(setCellValueSelector(id));
     const [isEditing, setIsEditing] = useState(false);
 
-
     // When the user changes the value of the cell, we need to update the cell state
     const handleCellChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
+
+        if(newValue === '') setValue({
+            ...computedCellState,
+            value: ''
+        });
+
         // If the user didn't change the value, don't do anything
-        if (!newValue || newValue === computedCellState.value || newValue === computedCellState.formula) {
+        if (newValue === computedCellState.value || newValue === computedCellState.formula) {
             return;
         }
 
@@ -41,6 +46,14 @@ export default function Cell({ id }: { id: string }) {
     const handleToggleEditing = () => {
         setIsEditing(!isEditing);
     }
+
+    useEffect(() => {
+        if (computedCellState.error) {
+            setHasError(true);
+        }
+    }
+        , [computedCellState.error]
+    );
 
 
     return (
