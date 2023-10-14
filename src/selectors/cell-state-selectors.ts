@@ -10,11 +10,12 @@ export const computedCellStateFamily = selectorFamily({
     const cell = get(cellStateFamily(cellId));
 
     if (cell.formula) {
-      const { value, dependencies } = evaluateFormula(cell.formula, get);
+      const { value, dependencies, hasError } = evaluateFormula(cell.formula, get);
       return {
         ...cell,
         value,
         dependencies,
+        hasError
       };
     } else {
       return cell;

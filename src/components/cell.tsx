@@ -1,7 +1,7 @@
 import type { CellState } from '../types/cell-state';
 import type { ChangeEvent } from 'react';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { computedCellStateFamily, setCellFormulaSelector, setCellValueSelector } from '../selectors/cell-state-selectors';
@@ -47,17 +47,9 @@ export default function Cell({ id }: { id: string }) {
         setIsEditing(!isEditing);
     }
 
-    useEffect(() => {
-        if (computedCellState.error) {
-            setHasError(true);
-        }
-    }
-        , [computedCellState.error]
-    );
-
 
     return (
-        <div onDoubleClick={handleToggleEditing} className={`w-24 h-12 border-gray-300 text-white grid place-content-center ${isEditing ? 'border-2' : 'border'}`}>
+        <div onDoubleClick={handleToggleEditing} className={`w-24 h-12 border-gray-300  grid place-content-center ${isEditing ? 'border-2' : 'border'}  ${computedCellState.hasError ? 'text-red-400 text-xs text-center' : 'text-white'}`}>
             {
                 isEditing ? (
                     <input

@@ -26,6 +26,7 @@ export const evaluateFormula = (formula: string, cellStateGetter: GetRecoilValue
   if (invalidDependencies.length > 0) {
     return {
       value: `Error: Unsupported value(s) in ${invalidDependencies.join(', ')}`,
+      hasError: true,
       dependencies,
     };
   }
@@ -40,6 +41,7 @@ export const evaluateFormula = (formula: string, cellStateGetter: GetRecoilValue
     console.error('Error evaluating formula: ', error);
     return {
       value: 'Error',
+      hasError: true,
       dependencies,
     };
   }
