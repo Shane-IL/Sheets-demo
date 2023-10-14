@@ -15,7 +15,7 @@ export default function Sheet() {
     );
 
     return (
-        <div className="relative">
+        <div className="relative w-9/12 h-4/5 overflow-auto box-border">
             {/* Row Labels */}
             <div 
                 className="absolute top-4 left-0 flex flex-col items-center gap-2 p-2" 
